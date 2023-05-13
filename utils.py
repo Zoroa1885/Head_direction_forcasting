@@ -55,13 +55,11 @@ def pca_decomp(X_train, X_val, n_comp = 20):
     print(sum(explained_variance))
     return X_train, X_val
 
-
 def to_radiant(cos, sin):
     cos = np.clip(cos, -1, 1)
     sin = np.clip(sin, -1, 1)
     
-    radiant = np.arccos(cos)
-    radiant = radiant + (sin<0)*np.pi
+    radiant = np.arccos(cos)*(sin>0) + (np.pi*np.ones(len(cos))+np.arccos(-cos))*(sin<=0)
     return radiant
 
 def to_multi(y):
